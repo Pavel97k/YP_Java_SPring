@@ -1,0 +1,45 @@
+.h1_home {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.p_home {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.marquee {
+    overflow: hidden;
+    font-size: 0;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: default;
+    user-select: none;
+}
+
+.marquee__inner {
+    font-size: 2rem;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.background_body {
+    background-image: url(image.svg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.costum_searh{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 4px 4px 20px black;
+}

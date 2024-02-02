@@ -1,0 +1,132 @@
+<!-- Пример HTML с использованием Bootstrap -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../../static/style.css">
+    <title>Employee Page Update</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Главная</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/BoardRole_PlayingGames}">BoardRole_PlayingGames</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/CitadelColourPaints}">CitadelColourPaints</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/CollectibleCardGames}">CollectibleCardGames</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/Employee}">Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/Manufacturer}">Manufacturer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/Role}">Role</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/TableGames}">TableGames</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/WarGames}">WarGames</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Содержимое страницы -->
+<div class="container">
+    <h1 class="div_flex_center margin_top_botoom_footer">Employee</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">username</th>
+            <th scope="col">second_name</th>
+            <th scope="col">first_name</th>
+            <th scope="col">middle_name</th>
+            <th scope="col">role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employee}">
+            <td th:text="${employee.id}"></td>
+            <td th:text="${employee.username}"></td>
+            <td th:text="${employee.second_name}"></td>
+            <td th:text="${employee.first_name}"></td>
+            <td th:text="${employee.middle_name}"></td>
+            <td th:text="${employee.role != null ? employee.role.name : '-'}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form th:action="@{/Employee/update/{id}(id=${employee.id})}" method="post" th:object="${employee}">
+        <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+        <h2>Add Employee</h2>
+        <label class="form-control">User Name:
+            <input type="text" name="username" th:field="*{username}" class="form-control" required/>
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+        </label><br/>
+        <label class="form-control">Password:
+            <input type="text" name="password" class="form-control"/>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        </label><br/>
+        <label class="form-control">Second Name:
+            <input type="text" name="second_name" th:field="*{second_name}" class="form-control" required/>
+            <span th:if="${#fields.hasErrors('second_name')}" th:errors="*{second_name}"></span>
+        </label><br/>
+        <label class="form-control">First Name:
+            <input type="text" name="first_name" th:field="*{first_name}" class="form-control" required/>
+            <span th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}"></span>
+        </label><br/>
+        <label class="form-control">Middle Name:
+            <input type="text" name="middle_name" th:field="*{middle_name}" class="form-control" required/>
+            <span th:if="${#fields.hasErrors('middle_name')}" th:errors="*{middle_name}"></span>
+        </label><br/>
+
+        <label class="form-control">Role:
+            <select class="form-control" name="role">
+                <option>Выберите первичный ключ</option>
+                <th:block th:each="primaryKeyValue : ${primaryKeyValues}">
+                    <option th:value="${primaryKeyValueStat.current.id}"
+                            th:text="${primaryKeyValueStat.current.name}" th:field="*{role}"></option>
+                </th:block>
+                <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+            </select>
+        </label><br>
+        <label class="form-control">Manufacturer:
+            <select class="form-control" name="manufacturer_employees">
+                <option>Выберите первичный ключ</option>
+                <th:block th:each="primaryKeyValue : ${Manufacturers_emp}">
+                    <option th:value="${primaryKeyValueStat.current.id}"
+                            th:text="${primaryKeyValueStat.current.name}"></option>
+                </th:block>
+            </select>
+        </label><br>
+
+        <input type="submit" class="btn btn-light btn-outline-dark" value="Update Employee"/>
+    </form>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html>

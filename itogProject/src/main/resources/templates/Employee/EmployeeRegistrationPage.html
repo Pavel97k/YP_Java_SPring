@@ -1,0 +1,69 @@
+<!-- Пример HTML с использованием Bootstrap -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <title>Registration</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#"><h1>Регистрация</h1></a>
+    </div>
+</nav>
+
+<!-- Содержимое страницы -->
+<div class="container">
+    <h1 class="div_flex_center margin_top_botoom_footer">Регистрация</h1>
+    <div style="overflow: auto">
+        <form th:action="@{/register/new}" method="post">
+            <label class="form-control">Login:
+                <input class="form-control" type="text" name="username" placeholder="Username" required>
+            </label><br>
+            <label class="form-control">Password:
+                <input class="form-control" type="password" name="password" placeholder="Password" required>
+            </label><br>
+            <label class="form-control">Second_name:
+                <input class="form-control" type="text" name="second_name" placeholder="Second_name" required>
+            </label><br>
+            <label class="form-control">First_name:
+                <input class="form-control" type="text" name="first_name" placeholder="First_name" required>
+            </label><br>
+            <label class="form-control">Middle_name:
+                <input class="form-control" type="text" name="middle_name" placeholder="Middle_name" required>
+            </label><br>
+            <label class="form-control">Role:
+                <select class="form-control" name="role">
+                    <option>Выберите первичный ключ</option>
+                    <th:block th:each="primaryKeyValue : ${primaryKeyValues}">
+                        <option th:value="${primaryKeyValueStat.current.id}"
+                                th:text="${primaryKeyValueStat.current.name}"></option>
+                    </th:block>
+                </select>
+            </label><br>
+            <label class="form-control">Manufacturer:
+                <select class="form-control" name="manufacturer_employees">
+                    <option>Выберите первичный ключ</option>
+                    <th:block th:each="primaryKeyValue : ${Manufacturers_emp}">
+                        <option th:value="${primaryKeyValueStat.current.id}"
+                                th:text="${primaryKeyValueStat.current.name}"></option>
+                    </th:block>
+                </select>
+            </label><br>
+            <input class="form-control btn btn-primary border" type="submit" value="Register">
+        </form>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html>

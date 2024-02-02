@@ -1,0 +1,117 @@
+<!-- Пример HTML с использованием Bootstrap -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <title>TableGames Page</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Главная</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/BoardRole_PlayingGames}">BoardRole_PlayingGames</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/CitadelColourPaints}">CitadelColourPaints</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/CollectibleCardGames}">CollectibleCardGames</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/Employee}">Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/Manufacturer}">Manufacturer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/Role}">Role</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/TableGames}">TableGames</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/WarGames}">WarGames</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Содержимое страницы -->
+<div class="container">
+    <h1 class="div_flex_center margin_top_botoom_footer">TableGames</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">name</th>
+            <th scope="col">description</th>
+            <th scope="col">year_of_release</th>
+            <th scope="col">manufacturer</th>
+            <th scope="col">Редактировать</th>
+            <th scope="col">Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="table_game : ${table_games}">
+            <td th:text="${table_game.id}"></td>
+            <td th:text="${table_game.name}"></td>
+            <td th:text="${table_game.description}"></td>
+            <td th:text="${table_game.year_of_release}"></td>
+            <td th:text="${table_game.manufacturer_tableGames != null ? table_game.manufacturer_tableGames.name : '-'}"></td>
+            <td><a class="btn btn-link"
+                   th:href="@{/TableGames/page/update/{id}(id=${table_game.id})}">Редактировать</a>
+            </td>
+            <td><a class="btn btn-link"
+                   th:href="@{/TableGames/delete/{id}(id=${table_game.id})}">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form th:action="@{/TableGames/add}" method="post">
+        <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+        <h2>Add TableGames</h2>
+        <label class="form-control">Name:
+            <input type="text" name="name" class="form-control" required/>
+        </label><br/>
+        <label class="form-control">Description:
+            <input type="text" name="description" class="form-control" required/>
+        </label><br/>
+        <label class="form-control">Year of Release:
+            <input type="text" name="year_of_release" class="form-control" required/>
+        </label><br/>
+
+        <label class="form-control">Manufacturer:
+            <select class="form-control" name="manufacturer_tableGames">
+                <option>Выберите первичный ключ</option>
+                <th:block th:each="primaryKeyValue : ${primaryKeyValues}">
+                    <option th:value="${primaryKeyValueStat.current.id}" th:text="${primaryKeyValueStat.current.name}"></option>
+                </th:block>
+            </select>
+        </label><br>
+
+        <input type="submit" class="btn btn-light btn-outline-dark" value="Add TableGames"/>
+    </form>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

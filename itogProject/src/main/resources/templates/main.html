@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/style.css" th:href="@{/style.css}" />
+    <title>Main</title>
+</head>
+
+<body class="background_body">
+    <nav class="navbar navbar-expand-lg navbar">
+        <div class="container">
+            <div id="marquee1" class="marquee">
+                <div class="marquee__inner">
+                    Pura mens stulti pinguis soli est: si amoris, fidei et honoris semina non seminaveris, herbas
+                    insidiosas haeresis et proditionis radicem habebis.</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div>
+            <input class="costum_searh" type="search" name="" id="" placeholder="введите текст...">
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+<script>
+    function animateMarquee(el, duration) {
+        const innerEl = el.querySelector('.marquee__inner');
+        const innerWidth = innerEl.offsetWidth;
+        const cloneEl = innerEl.cloneNode(true);
+        el.appendChild(cloneEl);
+
+        let start = performance.now();
+        let progress;
+        let translateX;
+
+        requestAnimationFrame(function step(now) {
+            progress = (now - start) / duration;
+
+            if (progress > 1) {
+                progress %= 1;
+                start = now;
+            }
+
+            translateX = innerWidth * progress;
+
+            innerEl.style.transform = `translate3d(-${translateX}px, 0 , 0)`;
+            cloneEl.style.transform = `translate3d(-${translateX}px, 0 , 0)`;
+            requestAnimationFrame(step);
+        });
+    }
+
+    const marquee1 = document.querySelector('#marquee1');
+
+    animateMarquee(marquee1, 19000);
+</script>
+
+</html>
